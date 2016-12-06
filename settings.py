@@ -3,10 +3,10 @@ import os
 ## Price
 
 # The minimum rent you want to pay per month.
-MIN_PRICE = 1500
+MIN_PRICE = 4000
 
 # The maximum rent you want to pay per month.
-MAX_PRICE = 2000
+MAX_PRICE = 6400
 
 ## Location preferences
 
@@ -18,32 +18,32 @@ CRAIGSLIST_SITE = 'sfbay'
 # What Craigslist subdirectories to search on.
 # For instance, https://sfbay.craigslist.org/eby/ is the East Bay, and https://sfbay.craigslist.org/sfc/ is San Francisco.
 # You only need the last three letters of the URLs.
-AREAS = ["eby", "sfc", "sby", "nby"]
+AREAS = ["sfc"]
 
 # A list of neighborhoods and coordinates that you want to look for apartments in.  Any listing that has coordinates
 # attached will be checked to see which area it is in.  If there's a match, it will be annotated with the area
 # name.  If no match, the neighborhood field, which is a string, will be checked to see if it matches
 # anything in NEIGHBORHOODS.
 BOXES = {
-    "adams_point": [
-        [37.80789, -122.25000],
-        [37.81589,	-122.26081],
+    "marina": [
+        [37.798984, -122.447573],
+        [37.807258, -122.424452],
     ],
-    "piedmont": [
-        [37.82240, -122.24768],
-        [37.83237, -122.25386],
+    "north_beach": [
+        [37.796712, -122.412221],
+        [37.808682, -122.399905],
     ],
-    "rockridge": [
-        [37.83826, -122.24073],
-        [37.84680, -122.25944],
+    "anza_vista": [
+        [37.778568, -122.447863],
+        [37.782977, -122.439001],
     ],
-    "berkeley": [
-        [37.86226, -122.25043],
-        [37.86781, -122.26502],
+    "laurel_heights": [
+        [37.781892, -122.460759],
+        [37.786301, -122.445652],dsa
     ],
-    "north_berkeley": [
-        [37.86425, -122.26330],
-        [37.87655, -122.28974],
+    "cow_hollow": [
+        [37.792848, -122.447573],
+        [37.800576, -122.423594],
     ],
     "pac_heights": [
         [37.79124, -122.42381],
@@ -53,21 +53,49 @@ BOXES = {
         [37.78554, -122.42878],
         [37.78873, -122.44544],
     ],
-    "haight": [
-        [37.77059, -122.42688],
-        [37.77086, -122.45401],
+    "russian_hill": [
+        [37.796882, -122.422864],
+        [37.808682, -122.411449],
     ],
-    "sunset": [
-        [37.75451, -122.46422],
-        [37.76258, -122.50825],
+    "nob_hill": [
+        [37.787539, -122.424495],
+        [37.797204, -122.40999],
+    ],
+    "lower_height": [
+        [37.768255, -122.440953],
+        [37.775701, -122.419281],
+    ],
+    "haight": [
+        [37.766194, -122.453796],
+        [37.773641, -122.436383],
     ],
     "richmond": [
         [37.77188, -122.47263],
         [37.78029, -122.51005],
     ],
     "presidio": [
-        [37.77805, -122.43959],
-        [37.78829, -122.47151],
+        [37.78586, -122.466509],
+        [37.791998, -122.445481],
+    ],
+    "mission": [
+        [37.755499, -122.425429],
+        [37.768917, -122.408799],
+    ],
+    "japantown": [
+        [37.781756, -122.434924],
+        [37.790303, -122.402737],
+    ],
+    "western_addition": [
+        [37.774701, -122.437756],
+        [37.784198, -122.416642],
+    ],
+    "north_of_panhandle": [
+        [37.772869, -122.465265],
+        [37.782536, -122.433937],
+    ],
+     "duboce_triangle": [
+        [37.760792, -122.435868],
+        [37.76795, -122.425826],
     ]
 }
 
@@ -75,22 +103,17 @@ BOXES = {
 # one of the boxes you defined, it will be checked to see if the neighborhood name it was listed under matches one
 # of these.  This is less accurate than the boxes, because it relies on the owner to set the right neighborhood,
 # but it also catches listings that don't have coordinates (many listings are missing this info).
-NEIGHBORHOODS = ["berkeley north", "berkeley", "rockridge", "adams point", "oakland lake merritt", "cow hollow", "piedmont", "pac hts", "pacific heights", "lower haight", "inner sunset", "outer sunset", "presidio", "palo alto", "richmond / seacliff", "haight ashbury", "alameda", "twin peaks", "noe valley", "bernal heights", "glen park", "sunset", "mission district", "potrero hill", "dogpatch"]
+NEIGHBORHOODS = ["marina", "north beach", "anza vista", "laurel heights", "lone mountain", "cow hollow", "pac hts", "pacific heights", "lower pac heights", "lower pacific heights", "russian hill", "nob hill", "lower haight", "presidio", "presidio heights", "haight ashbury", "mission district", "japantown", "japan town", "western addition", "north of panhandle", "nopa", "jordan park", "hayes valley", "duboce"]
 
 ## Transit preferences
 
 # The farthest you want to live from a transit stop.
-MAX_TRANSIT_DIST = 2 # kilometers
+MAX_TRANSIT_DIST = 1 # kilometers
 
 # Transit stations you want to check against.  Every coordinate here will be checked against each listing,
 # and the closest station name will be added to the result and posted into Slack.
-TRANSIT_STATIONS = {
-    "oakland_19th_bart": [37.8118051,-122.2720873],
-    "macarthur_bart": [37.8265657,-122.2686705],
-    "rockridge_bart": [37.841286,-122.2566329],
-    "downtown_berkeley_bart": [37.8629541,-122.276594],
-    "north_berkeley_bart": [37.8713411,-122.2849758]
-}
+
+TRANSIT_STATIONS = {}
 
 ## Search type preferences
 
@@ -108,11 +131,10 @@ CRAIGSLIST_HOUSING_SECTION = 'apa'
 SLEEP_INTERVAL = 20 * 60 # 20 minutes
 
 # Which slack channel to post the listings into.
-SLACK_CHANNEL = "#housing"
+SLACK_CHANNEL = "#chateau-search"
 
 # The token that allows us to connect to slack.
 # Should be put in private.py, or set as an environment variable.
-SLACK_TOKEN = os.getenv('SLACK_TOKEN', "")
 
 # Any private settings are imported here.
 try:
